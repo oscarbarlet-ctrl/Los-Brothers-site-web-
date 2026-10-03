@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Los Brothers — Burgers, Tacos & Kebab</title>
+  <meta
+    name="description"
+    content="Los Brothers à Cysoing — Burgers, smash burgers, tacos, kebab, chicken et bien plus."
+  >
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #0b0b0b;
+      --bg-soft: #111111;
+      --card: #151515;
+      --white: #f7f4ef;
+      --muted: #a7a39d;
+      --orange: #ff5a1f;
+      --orange-dark: #d94310;
+      --border: rgba(255,255,255,0.09);
+      --radius: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 76px;
+      z-index: 1000;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 6vw;
+
+      background: rgba(11,11,11,0.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .logo {
+      font-family: "Oswald", sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #d8d4cf;
+    }
+
+    .nav-links a {
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    .nav-button {
+      padding: 12px 20px;
+      border-radius: 100px;
+      background: var(--orange);
+      color: white;
+      font-weight: 700;
+      transition: 0.25s ease;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      background: #ff6b35;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+
+      display: flex;
+      align-items: center;
+
+      padding: 130px 7vw 80px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      right: -280px;
+      top: -200px;
+
+      background: var(--orange);
+      opacity: 0.14;
+      filter: blur(120px);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 60%;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+
+      margin-bottom: 25px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+    .hero h1 {
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(80px, 13vw, 190px);
+      line-height: 0.82;
+      text-transform: uppercase;
+      letter-spacing: -5px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.8);
+    }
+
+    .hero-description {
+      max-width: 510px;
+      margin-top: 35px;
+
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 35px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      padding: 15px 24px;
+      border-radius: 100px;
+
+      font-weight: 700;
+      font-size: 14px;
+
+      transition: 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(255,90,31,0.25);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* Hero food visual */
+
+    .hero-food {
+      position: absolute;
+      right: 4vw;
+      bottom: 8%;
+      width: 39vw;
+      height: 39vw;
+      max-width: 600px;
+      max-height: 600px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .food-circle {
+      width: 72%;
+      height: 72%;
+      border-radius: 50%;
+
+      background:
+        radial-gradient(circle at 35% 30%, #ffb05d 0%, transparent 10%),
+        radial-gradient(circle at 60% 55%, #e84818 0%, #8e200b 50%, #291006 100%);
+
+      box-shadow:
+        0 0 80px rgba(255,90,31,0.25),
+        inset 0 0 50px rgba(0,0,0,0.35);
+
+      transform: rotate(-12deg);
+    }
+
+    .burger-stack {
+      position: absolute;
+      width: 68%;
+      height: 45%;
+      bottom: 25%;
+      left: 16%;
+      transform: rotate(-7deg);
+    }
+
+    .bun-top,
+    .bun-bottom {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 27%;
+      border-radius: 50px;
+      background: linear-gradient(#d98b3e, #9b4d18);
+      box-shadow: inset 0 -8px rgba(0,0,0,0.15);
+    }
+
+    .bun-top {
+      top: 0;
+      height: 35%;
+      border-radius: 50% 50% 25% 25%;
+    }
+
+    .bun-top::after {
+      content: "•  •  •  •  •  •";
+      position: absolute;
+      color: #f6cf8e;
+      font-size: 13px;
+      top: 18px;
+      left: 18%;
+      letter-spacing: 7px;
+    }
+
+    .bun-bottom {
+      bottom: 0;
+      height: 22%;
+      border-radius: 20px 20px 40px 40px;
+    }
+
+    .meat {
+      position: absolute;
+      left: 3%;
+      width: 94%;
+      height: 20%;
+      background: linear-gradient(#3b1710, #160806);
+      border-radius: 14px;
+    }
+
+    .meat.one {
+      top: 35%;
+    }
+
+    .meat.two {
+      top: 56%;
+    }
+
+    .cheese {
+      position: absolute;
+      left: 2%;
+      width: 96%;
+      height: 9%;
+      background: #ffbe32;
+      clip-path: polygon(0 0, 100% 0, 96% 100%, 84% 55%, 72% 100%, 57% 55%, 43% 100%, 29% 55%, 15% 100%, 5% 55%);
+    }
+
+    .cheese.one {
+      top: 50%;
+    }
+
+    .cheese.two {
+      top: 71%;
+    }
+
+    .lettuce {
+      position: absolute;
+      left: 1%;
+      width: 98%;
+      height: 8%;
+      background: #587d24;
+      border-radius: 50%;
+    }
+
+    .lettuce.one {
+      top: 32%;
+    }
+
+    /* =========================
+       MARQUEE
+    ========================= */
+
+    .marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      background: #101010;
+    }
+
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 25s linear infinite;
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      font-size: 22px;
+      letter-spacing: 2px;
+    }
+
+    .marquee-track span {
+      margin: 0 30px;
+      color: var(--orange);
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    section {
+      padding: 110px 7vw;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 45px;
+    }
+
+    .section-label {
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      font-size: clamp(46px, 6vw, 82px);
+      line-height: 0.95;
+    }
+
+    .section-description {
+      max-width: 400px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* =========================
+       FEATURED
+    ========================= */
+
+    .featured {
+      background: #0f0f0f;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .food-card {
+      position: relative;
+      min-height: 420px;
+      padding: 25px;
+
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #181818, #0e0e0e);
+
+      overflow: hidden;
+      transition: 0.35s ease;
+    }
+
+    .food-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255,90,31,0.4);
+    }
+
+    .food-card::before {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      top: 45px;
+      right: -50px;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.12;
+      filter: blur(50px);
+    }
+
+    .food-number {
+      color: #65615c;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .food-visual {
+      height: 220px;
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .fake-food {
+      position: absolute;
+      width: 190px;
+      height: 110px;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+
+      background:
+        radial-gradient(ellipse at center, #5b2415 0 27%, transparent 28%),
+        linear-gradient(#e08a3b, #9b4b18);
+
+      box-shadow: 0 30px 40px rgba(0,0,0,0.45);
+    }
+
+    .food-card:nth-child(2) .fake-food {
+      background:
+        radial-gradient(ellipse at center, #ffcc3d 0 18%, #6d2918 19% 30%, transparent 31%),
+        linear-gradient(#d78a40, #713211);
+    }
+
+    .food-card:nth-child(3) .fake-food {
+      background:
+        radial-gradient(ellipse at center, #f3b73c 0 12%, #f0f0df 13% 22%, #b94b1d 23% 34%, transparent 35%),
+        linear-gradient(#d38b47, #7e3513);
+    }
+
+    .food-card h3 {
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      font-size: 32px;
+      margin-bottom: 7px;
+    }
+
+    .food-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    .food-price {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+
+      font-family: "Oswald", sans-serif;
+      font-size: 27px;
+      color: var(--orange);
+    }
+
+    /* =========================
+       MENU
+    ========================= */
+
+    .menu-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 35px;
+    }
+
+    .menu-tabs button {
+      flex-shrink: 0;
+      padding: 11px 18px;
+      border-radius: 100px;
+      background: transparent;
+      color: #aaa;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .menu-tabs button.active,
+    .menu-tabs button:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: white;
+    }
+
+    .menu-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      padding: 22px;
+
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: var(--bg-soft);
+
+      transition: 0.25s;
+    }
+
+    .menu-item:hover {
+      background: #171717;
+      transform: translateX(4px);
+    }
+
+    .menu-item h3 {
+      font-size: 16px;
+      margin-bottom: 7px;
+    }
+
+    .menu-item p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      max-width: 470px;
+    }
+
+    .menu-price {
+      white-space: nowrap;
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    /* =========================
+       DELIVERY
+    ========================= */
+
+    .delivery {
+      background: var(--orange);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .delivery::after {
+      content: "20€";
+      position: absolute;
+      right: -30px;
+      bottom: -100px;
+      font-family: "Oswald", sans-serif;
+      font-size: 300px;
+      font-weight: 700;
+      opacity: 0.12;
+    }
+
+    .delivery-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .delivery h2 {
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(55px, 7vw, 95px);
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+
+    .delivery p {
+      margin-top: 22px;
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .delivery-info {
+      display: grid;
+      gap: 12px;
+    }
+
+    .delivery-pill {
+      padding: 18px 20px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 15px;
+      background: rgba(0,0,0,0.08);
+      font-weight: 600;
+    }
+
+    /* =========================
+       INFOS
+    ========================= */
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .info-card {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .info-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255,90,31,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      color: var(--orange);
+      font-size: 20px;
+    }
+
+    .info-card h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .info-card p,
+    .info-card li {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .hours {
+      list-style: none;
+    }
+
+    .hours li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+    }
+
+    .hours li:last-child {
+      border-bottom: none;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+      text-align: center;
+      padding: 150px 7vw;
+      background:
+        radial-gradient(circle at center, rgba(255,90,31,0.12), transparent 50%),
+        #0f0f0f;
+    }
+
+    .cta h2 {
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(60px, 10vw, 140px);
+      text-transform: uppercase;
+      line-height: 0.85;
+    }
+
+    .cta h2 span {
+      color: var(--orange);
+    }
+
+    .cta p {
+      color: var(--muted);
+      margin: 25px auto 35px;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 7vw;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    .mobile-nav {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .navbar {
+        padding: 0 5vw;
+      }
+
+      .hero {
+        padding: 130px 5vw 70px;
+        min-height: auto;
+      }
+
+      .hero-content {
+        width: 100%;
+      }
+
+      .hero h1 {
+        font-size: clamp(72px, 21vw, 140px);
+        letter-spacing: -3px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .hero-food {
+        position: relative;
+        right: auto;
+        bottom: auto;
+
+        width: 100%;
+        height: 350px;
+
+        margin-top: 35px;
+      }
+
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-list {
+        grid-template-columns: 1fr;
+      }
+
+      .delivery-inner {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 80px 5vw;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-description {
+        margin-top: 20px;
+      }
+
+      .mobile-nav {
+        position: fixed;
+        z-index: 2000;
+        bottom: 12px;
+        left: 4vw;
+        right: 4vw;
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        padding: 8px;
+
+        border-radius: 18px;
+        background: rgba(20,20,20,0.92);
+        backdrop-filter: blur(20px);
+
+        border: 1px solid rgba(255,255,255,0.1);
+
+        box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+      }
+
+      .mobile-nav a {
+        text-align: center;
+        padding: 10px 4px;
+        color: #aaa;
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .mobile-nav a span {
+        display: block;
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+
+      footer {
+        padding-bottom: 110px;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+    .fade-up {
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVBAR
+  ========================= -->
+
+  <header class="navbar">
+
+    <a href="#accueil" class="logo">
+      LOS<span>.</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#carte">La carte</a>
+      <a href="#livraison">Livraison</a>
+      <a href="#infos">Infos</a>
+      <a href="#contact">Contact</a>
+
+      <a href="#carte" class="nav-button">
+        Commander
+      </a>
+    </nav>
+
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <main>
+
+    <section class="hero" id="accueil">
+
+      <div class="hero-content">
+
+        <div class="eyebrow fade-up">
+          Cysoing · Nord
+        </div>
+
+        <h1 class="fade-up delay-1">
+          Los
+          <span>Brothers</span>
+        </h1>
+
+        <p class="hero-description fade-up delay-2">
+          Burgers, smash burgers, tacos, kebab & chicken.
+          Une cuisine généreuse, préparée pour être dégustée
+          sur place ou à emporter.
+        </p>
+
+        <div class="hero-actions fade-up delay-3">
+          <a href="#carte" class="btn btn-primary">
+            Voir la carte →
+          </a>
+
+          <a href="#infos" class="btn btn-secondary">
+            Nous trouver
+          </a>
+        </div>
+
+      </div>
+
+
+      <div class="hero-food">
+
+        <div class="food-circle"></div>
+
+        <div class="burger-stack">
+
+          <div class="bun-top"></div>
+
+          <div class="lettuce one"></div>
+
+          <div class="meat one"></div>
+
+          <div class="cheese one"></div>
+
+          <div class="meat two"></div>
+
+          <div class="cheese two"></div>
+
+          <div class="bun-bottom"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MARQUEE
+    ========================= -->
+
+    <div class="marquee">
+
+      <div class="marquee-track">
+
+        BURGERS
+        <span>✦</span>
+
+        SMASH
+        <span>✦</span>
+
+        TACOS
+        <span>✦</span>
+
+        KEBAB
+        <span>✦</span>
+
+        CHICKEN
+        <span>✦</span>
+
+        BURGERS
+        <span>✦</span>
+
+        SMASH
+        <span>✦</span>
+
+        TACOS
+        <span>✦</span>
+
+        KEBAB
+        <span>✦</span>
+
+        CHICKEN
+        <span>✦</span>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         BEST SELLERS
+    ========================= -->
+
+    <section class="featured">
+
+      <div class="section-header">
+
+        <div>
+          <div class="section-label">
+            Les incontournables
+          </div>
+
+          <h2 class="section-title">
+            Les<br>Brothers
+          </h2>
+        </div>
+
+        <p class="section-description">
+          Des recettes généreuses, des produits gourmands
+          et surtout de quoi repartir le ventre plein.
+        </p>
+
+      </div>
+
+
+      <div class="featured-grid">
+
+        <article class="food-card">
+
+          <div class="food-number">
+            01 / BURGER
+          </div>
+
+          <div class="food-visual">
+            <div class="fake-food"></div>
+          </div>
+
+          <h3>
+            Brother
+          </h3>
+
+          <p>
+            Haché de bœuf, cheddar AOP, salade, tomate,
+            cornichon, oignon confit et sauce burger maison.
+          </p>
+
+          <div class="food-price">
+            8,90€
+          </div>
+
+        </article>
+
+
+        <article class="food-card">
+
+          <div class="food-number">
+            02 / SMASH
+          </div>
+
+          <div class="food-visual">
+            <div class="fake-food"></div>
+          </div>
+
+          <h3>
+            Smash Mega
+          </h3>
+
+          <p>
+            Trois steaks, cheddar, pain bun brioché,
+            crudités et sauce burger maison.
+          </p>
+
+          <div class="food-price">
+            9,90€
+          </div>
+
+        </article>
+
+
+        <article class="food-card">
+
+          <div class="food-number">
+            03 / BURGER
+          </div>
+
+          <div class="food-visual">
+            <div class="fake-food"></div>
+          </div>
+
+          <h3>
+            Le Montagnard
+          </h3>
+
+          <p>
+            Bœuf, raclette, bacon, galette de pomme de terre
+            et sauce poivre maison.
+          </p>
+
+          <div class="food-price">
+            10,90€
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MENU
+    ========================= -->
+
+    <section id="carte">
+
+      <div class="section-header">
+
+        <div>
+          <div class="section-label">
+            La carte
+          </div>
+
+          <h2 class="section-title">
+            À toi<br>de choisir.
+          </h2>
+        </div>
+
+        <p class="section-description">
+          Burger, smash, kebab, chicken, tacos, tex-mex...
+          Il y a de quoi faire.
+        </p>
+
+      </div>
+
+
+      <div class="menu-tabs">
+
+        <button class="active" data-category="burger">
+          Burgers
+        </button>
+
+        <button data-category="smash">
+          Smash
+        </button>
+
+        <button data-category="kebab">
+          Kebab
+        </button>
+
+        <button data-category="chicken">
+          Chicken
+        </button>
+
+        <button data-category="tacos">
+          Tacos
+        </button>
+
+      </div>
+
+
+      <div class="menu-list" id="menu-list">
+
+        <!-- BURGERS -->
+
+        <article class="menu-item" data-category="burger">
+          <div>
+            <h3>Brother</h3>
+            <p>
+              Bœuf, cheddar AOP, salade, tomate,
+              cornichon, oignon confit, sauce burger maison.
+            </p>
+          </div>
+          <div class="menu-price">8,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="burger">
+          <div>
+            <h3>Big Brother</h3>
+            <p>
+              Bœuf, tenders, cheddar AOP,
+              oignon confit, sauce burger maison.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="burger">
+          <div>
+            <h3>Big Daddy</h3>
+            <p>
+              2 tenders poulet, cheddar AOP,
+              salade, tomate, oignon confit.
+            </p>
+          </div>
+          <div class="menu-price">8,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="burger">
+          <div>
+            <h3>Le Montagnard</h3>
+            <p>
+              Bœuf, raclette, bacon, galette de pomme de terre,
+              oignon confit, sauce poivre maison.
+            </p>
+          </div>
+          <div class="menu-price">10,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="burger">
+          <div>
+            <h3>Le Truffe</h3>
+            <p>
+              Bœuf, reblochon, galette de pomme de terre,
+              champignons, sauce truffe.
+            </p>
+          </div>
+          <div class="menu-price">10,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="burger">
+          <div>
+            <h3>Le Crunchy</h3>
+            <p>
+              2 tenders, cheddar, oignon crispy,
+              galette de pomme de terre.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="burger">
+          <div>
+            <h3>Végé Gourmand</h3>
+            <p>
+              Galette de légume, cheddar AOP,
+              oignon confit, tomate, sauce miel moutarde.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <!-- SMASH -->
+
+        <article class="menu-item" data-category="smash">
+          <div>
+            <h3>Smash Burger</h3>
+            <p>
+              2 steaks, cheddar, pain bun brioché,
+              salade, tomate, cornichon, oignons.
+            </p>
+          </div>
+          <div class="menu-price">7,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="smash">
+          <div>
+            <h3>Smash Méga</h3>
+            <p>
+              3 steaks, cheddar, pain bun brioché,
+              salade, tomate, cornichon, oignon.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="smash">
+          <div>
+            <h3>Smash Bacon</h3>
+            <p>
+              2 steaks, cheddar, bacon,
+              oignons confits, sauce burger maison.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="smash">
+          <div>
+            <h3>Smash Chicken</h3>
+            <p>
+              2 tenders, cheddar, salade, tomate,
+              oignons confits, sauce chicken.
+            </p>
+          </div>
+          <div class="menu-price">7,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="smash">
+          <div>
+            <h3>Smash Truffe</h3>
+            <p>
+              2 steaks, reblochon, salade,
+              tomate, oignons confits, sauce truffe.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="smash">
+          <div>
+            <h3>Smash Raclette</h3>
+            <p>
+              2 steaks, raclette, salade,
+              tomate, oignons confits, sauce poivre maison.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <!-- KEBAB -->
+
+        <article class="menu-item" data-category="kebab">
+          <div>
+            <h3>Kebab Faluche</h3>
+            <p>Kebab servi dans une faluche.</p>
+          </div>
+          <div class="menu-price">6,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="kebab">
+          <div>
+            <h3>Kebab Galette</h3>
+            <p>Kebab servi dans une galette.</p>
+          </div>
+          <div class="menu-price">6,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="kebab">
+          <div>
+            <h3>Kebab Berliner</h3>
+            <p>Version généreuse du kebab berlinois.</p>
+          </div>
+          <div class="menu-price">8,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="kebab">
+          <div>
+            <h3>Kapsalon</h3>
+            <p>Une généreuse portion façon kapsalon.</p>
+          </div>
+          <div class="menu-price">8,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="kebab">
+          <div>
+            <h3>Assiette Berliner</h3>
+            <p>Assiette généreuse façon Berliner.</p>
+          </div>
+          <div class="menu-price">11,90€</div>
+        </article>
+
+
+        <!-- CHICKEN -->
+
+        <article class="menu-item" data-category="chicken">
+          <div>
+            <h3>Menu Solo</h3>
+            <p>
+              3 wings, 2 tenders, frites et boisson 33cl.
+            </p>
+          </div>
+          <div class="menu-price">9,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="chicken">
+          <div>
+            <h3>Menu Duo</h3>
+            <p>
+              7 wings, 4 tenders, 2 frites et 2 boissons 33cl.
+            </p>
+          </div>
+          <div class="menu-price">18,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="chicken">
+          <div>
+            <h3>Menu Family</h3>
+            <p>
+              15 wings, 8 tenders, 4 frites et boisson 1,5L.
+            </p>
+          </div>
+          <div class="menu-price">28,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="chicken">
+          <div>
+            <h3>Menu Enfant</h3>
+            <p>
+              Burger, nuggets ou tenders, frites,
+              boisson et compote.
+            </p>
+          </div>
+          <div class="menu-price">7,90€</div>
+        </article>
+
+
+        <!-- TACOS -->
+
+        <article class="menu-item" data-category="tacos">
+          <div>
+            <h3>French Tacos M</h3>
+            <p>
+              Viande et sauce au choix.
+            </p>
+          </div>
+          <div class="menu-price">6,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="tacos">
+          <div>
+            <h3>French Tacos L</h3>
+            <p>
+              Viande et sauce au choix.
+            </p>
+          </div>
+          <div class="menu-price">8,90€</div>
+        </article>
+
+
+        <article class="menu-item" data-category="tacos">
+          <div>
+            <h3>French Tacos XL</h3>
+            <p>
+              Viande et sauce au choix.
+            </p>
+          </div>
+          <div class="menu-price">11,90€</div>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         DELIVERY
+    ========================= -->
+
+    <section class="delivery" id="livraison">
+
+      <div class="delivery-inner">
+
+        <div>
+
+          <div class="section-label" style="color:white;">
+            On vient à toi
+          </div>
+
+          <h2>
+            Livraison<br>
+            offerte.
+          </h2>
+
+          <p>
+            À partir de 20€ de commande, la livraison est offerte
+            dans de nombreuses communes autour de Cysoing.
+          </p>
+
+        </div>
+
+
+        <div class="delivery-info">
+
+          <div class="delivery-pill">
+            ✓ Livraison offerte dès 20€
+          </div>
+
+          <div class="delivery-pill">
+            ✓ Cysoing & alentours
+          </div>
+
+          <div class="delivery-pill">
+            ✓ À emporter disponible
+          </div>
+
+          <div class="delivery-pill">
+            ✓ Sur place
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         INFOS
+    ========================= -->
+
+    <section id="infos">
+
+      <div class="section-header">
+
+        <div>
+          <div class="section-label">
+            Los Brothers
+          </div>
+
+          <h2 class="section-title">
+            On se<br>retrouve ?
+          </h2>
+        </div>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-card">
+
+          <div class="info-icon">
+            📍
+          </div>
+
+          <h3>
+            Où nous trouver
+          </h3>
+
+          <p>
+            273 Rue Jean-Baptiste Lebas<br>
+            59830 Cysoing
+          </p>
+
+          <br>
+
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=273+Rue+Jean-Baptiste+Lebas+59830+Cysoing"
+            target="_blank"
+            class="btn btn-secondary"
+          >
+            Itinéraire →
+          </a>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <div class="info-icon">
+            🕐
+          </div>
+
+          <h3>
+            Horaires
+          </h3>
+
+          <ul class="hours">
+
+            <li>
+              <span>Lun — Ven</span>
+              <strong>18h30 — 22h30</strong>
+            </li>
+
+            <li>
+              <span>Samedi</span>
+              <strong>11h30 — 23h00</strong>
+            </li>
+
+            <li>
+              <span>Dimanche</span>
+              <strong>11h30 — 23h00</strong>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <div class="info-card" id="contact">
+
+          <div class="info-icon">
+            ☎
+          </div>
+
+          <h3>
+            Contact
+          </h3>
+
+          <p>
+            Une question ? Une commande ?
+            Contactez directement Los Brothers.
+          </p>
+
+          <br>
+
+          <a
+            href="tel:0982768408"
+            class="btn btn-primary"
+          >
+            09 82 76 84 08
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CTA
+    ========================= -->
+
+    <section class="cta">
+
+      <h2>
+        FAIS-TOI<br>
+        <span>PLAISIR.</span>
+      </h2>
+
+      <p>
+        Burgers. Smash. Tacos. Kebab. Chicken.
+        Maintenant, reste juste à choisir.
+      </p>
+
+      <a href="#carte" class="btn btn-primary">
+        Découvrir la carte →
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <div>
+      <strong>LOS BROTHERS</strong> · Cysoing
+    </div>
+
+    <div>
+      © 2026 Los Brothers
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       MOBILE NAV
+  ========================= -->
+
+  <nav class="mobile-nav">
+
+    <a href="#accueil">
+      <span>⌂</span>
+      Accueil
+    </a>
+
+    <a href="#carte">
+      <span>☰</span>
+      Carte
+    </a>
+
+    <a href="#livraison">
+      <span>↗</span>
+      Livraison
+    </a>
+
+    <a href="#infos">
+      <span>⌖</span>
+      Infos
+    </a>
+
+  </nav>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    const tabs = document.querySelectorAll(".menu-tabs button");
+    const items = document.querySelectorAll(".menu-item");
+
+    function showCategory(category) {
+
+      items.forEach(item => {
+
+        if (item.dataset.category === category) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+
+      });
+
+    }
+
+    tabs.forEach(tab => {
+
+      tab.addEventListener("click", () => {
+
+        tabs.forEach(t => t.classList.remove("active"));
+
+        tab.classList.add("active");
+
+        showCategory(tab.dataset.category);
+
+      });
+
+    });
+
+    // Première catégorie affichée
+    showCategory("burger");
+
+  </script>
+
+</body>
+</html>
