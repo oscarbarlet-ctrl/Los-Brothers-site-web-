@@ -43,7 +43,8 @@
     .nav-cta, .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 10px; padding: 0 20px; border: 1px solid transparent; border-radius: 999px; background: var(--orange); color: #1c130e; font-size: 13px; font-weight: 700; transition: transform .2s ease, background .2s ease; }
     .nav-cta { min-height: 40px; padding-inline: 16px; }
     .button:hover, .nav-cta:hover { transform: translateY(-2px); background: var(--orange-light); }
-    .arrow-icon { width: 1em; height: 1em; flex: 0 0 auto; display: inline-block; vertical-align: -.12em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }\n    .button-quiet { border-color: var(--line); background: transparent; color: var(--cream); }
+    .arrow-icon { width: 1em; height: 1em; flex: 0 0 auto; display: inline-block; vertical-align: -.12em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .button-quiet { border-color: var(--line); background: transparent; color: var(--cream); }
     .button-quiet:hover { background: rgba(255,255,255,.08); }
     .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; font-size: 20px; }
     .hero { position: relative; overflow: hidden; min-height: 620px; display: grid; align-items: center; padding: 86px 0 102px; background: radial-gradient(ellipse at 82% 46%, rgba(244,119,59,.16), transparent 35%), linear-gradient(120deg, #17130f 45%, #211811); }
@@ -837,7 +838,8 @@ boisson:"Boisson"
         bottom.className = "menu-card-bottom";
         addTextElement(bottom, "span", "category-tag", categoryNames[item.category] || item.category);
         if (item.details) {
-          const details = addTextElement(bottom, "button", "details-button", "Détails du tacos");\n          details.append(createArrowIcon("up-right"));
+          const details = addTextElement(bottom, "button", "details-button", "Détails du tacos");
+          details.append(createArrowIcon("up-right"));
           details.type = "button";
           details.addEventListener("click", () => openTacosDialog(item.size));
         }
