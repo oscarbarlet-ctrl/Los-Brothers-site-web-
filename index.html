@@ -1,1429 +1,285 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Los Brothers — Cysoing</title>
-<meta name="description" content="Los Brothers à Cysoing — Burgers, Smash, Tacos, Kebab, Chicken et Tex-Mex.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --bg:#090909;
-  --bg-soft:#111;
-  --card:#161616;
-  --card-hover:#1d1d1d;
-  --white:#f7f4ef;
-  --muted:#aaa59d;
-  --orange:#ff5a1f;
-  --border:rgba(255,255,255,.09);
-  --radius:24px;
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:var(--bg);
-  color:var(--white);
-  font-family:"DM Sans",sans-serif;
-  overflow-x:hidden;
-}
-
-body.modal-open{
-  overflow:hidden;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-button{
-  font:inherit;
-}
-
-::-webkit-scrollbar{
-  width:8px;
-}
-
-::-webkit-scrollbar-track{
-  background:var(--bg);
-}
-
-::-webkit-scrollbar-thumb{
-  background:#333;
-  border-radius:99px;
-}
-
-/* NAVBAR */
-
-.navbar{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:1000;
-  padding:18px 5%;
-  transition:.3s ease;
-}
-
-.navbar.scrolled{
-  background:rgba(9,9,9,.9);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-  padding-top:12px;
-  padding-bottom:12px;
-}
-
-.nav-inner{
-  max-width:1400px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.logo{
-  font-family:"Oswald",sans-serif;
-  font-size:25px;
-  font-weight:700;
-  white-space:nowrap;
-}
-
-.logo span{
-  color:var(--orange);
-}
-
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:30px;
-}
-
-.nav-links a{
-  position:relative;
-  color:#d8d4ce;
-  font-size:14px;
-  font-weight:600;
-  transition:.25s;
-}
-
-.nav-links a:hover{
-  color:#fff;
-}
-
-.nav-links a::after{
-  content:"";
-  position:absolute;
-  bottom:-7px;
-  left:0;
-  width:0;
-  height:2px;
-  background:var(--orange);
-  transition:.25s;
-}
-
-.nav-links a:hover::after{
-  width:100%;
-}
-
-.nav-contact{
-  padding:11px 18px;
-  border:1px solid var(--orange);
-  border-radius:999px;
-}
-
-.nav-contact::after{
-  display:none;
-}
-
-.nav-contact:hover{
-  background:var(--orange);
-}
-
-.menu-toggle{
-  display:none;
-  border:0;
-  background:none;
-  color:#fff;
-  font-size:27px;
-  cursor:pointer;
-}
-
-/* HERO */
-
-.hero{
-  min-height:100vh;
-  position:relative;
-  display:flex;
-  align-items:center;
-  padding:130px 6% 90px;
-  overflow:hidden;
-}
-
-.hero::before{
-  content:"";
-  position:absolute;
-  width:650px;
-  height:650px;
-  right:-180px;
-  top:80px;
-  border-radius:50%;
-  background:var(--orange);
-  opacity:.07;
-  filter:blur(100px);
-  animation:glow 8s ease-in-out infinite alternate;
-}
-
-@keyframes glow{
-  from{transform:translate(0,0) scale(1)}
-  to{transform:translate(-80px,40px) scale(1.12)}
-}
-
-.hero-content{
-  max-width:1400px;
-  width:100%;
-  margin:auto;
-  position:relative;
-  z-index:2;
-}
-
-.hero-kicker{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  color:var(--orange);
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  margin-bottom:18px;
-  animation:fadeUp .8s ease both;
-}
-
-.hero-kicker::before{
-  content:"";
-  width:28px;
-  height:2px;
-  background:var(--orange);
-}
-
-.hero h1{
-  font-family:"Oswald",sans-serif;
-  font-size:clamp(76px,12vw,175px);
-  line-height:.78;
-  text-transform:uppercase;
-  letter-spacing:-5px;
-  animation:fadeUp .9s .1s ease both;
-}
-
-.hero h1 span{
-  color:var(--orange);
-}
-
-.hero-description{
-  max-width:540px;
-  color:var(--muted);
-  line-height:1.7;
-  font-size:16px;
-  margin-top:38px;
-  animation:fadeUp .9s .2s ease both;
-}
-
-.hero-actions{
-  display:flex;
-  gap:13px;
-  margin-top:30px;
-  animation:fadeUp .9s .3s ease both;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:50px;
-  padding:0 23px;
-  border-radius:999px;
-  border:1px solid transparent;
-  font-weight:700;
-  font-size:14px;
-  cursor:pointer;
-  transition:.3s;
-}
-
-.btn-primary{
-  background:var(--orange);
-  color:#fff;
-}
-
-.btn-primary:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 30px rgba(255,90,31,.2);
-}
-
-.btn-secondary{
-  border-color:var(--border);
-  background:rgba(255,255,255,.03);
-}
-
-.btn-secondary:hover{
-  background:#fff;
-  color:#000;
-  transform:translateY(-3px);
-}
-
-/* BURGER DECORATION */
-
-.hero-food{
-  position:absolute;
-  right:8%;
-  bottom:14%;
-  width:270px;
-  height:220px;
-  animation:floatingFood 5s ease-in-out infinite;
-}
-
-.burger-bun-top{
-  position:absolute;
-  width:250px;
-  height:95px;
-  left:10px;
-  top:10px;
-  background:linear-gradient(145deg,#d96d27,#8e3514);
-  border-radius:140px 140px 35px 35px;
-  transform:rotate(-4deg);
-}
-
-.burger-bun-top::before{
-  content:"•  •   •   •  •   •";
-  position:absolute;
-  top:25px;
-  left:55px;
-  color:#f6c087;
-  letter-spacing:13px;
-  font-size:17px;
-}
-
-.burger-cheese{
-  position:absolute;
-  top:101px;
-  left:22px;
-  width:240px;
-  height:28px;
-  background:#ffb515;
-  transform:rotate(2deg);
-  border-radius:5px;
-}
-
-.burger-patty{
-  position:absolute;
-  top:125px;
-  left:12px;
-  width:255px;
-  height:50px;
-  background:linear-gradient(#392116,#1e100c);
-  border-radius:12px;
-}
-
-.burger-bun-bottom{
-  position:absolute;
-  top:174px;
-  left:20px;
-  width:240px;
-  height:45px;
-  background:linear-gradient(#d96d27,#87320f);
-  border-radius:15px 15px 35px 35px;
-}
-
-@keyframes floatingFood{
-  0%,100%{transform:translateY(0) rotate(0)}
-  50%{transform:translateY(-13px) rotate(2deg)}
-}
-
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(25px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* MARQUEE */
-
-.marquee{
-  overflow:hidden;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:17px 0;
-  background:var(--orange);
-  color:#111;
-}
-
-.marquee-track{
-  display:flex;
-  width:max-content;
-  animation:marquee 25s linear infinite;
-}
-
-.marquee-track span{
-  font-family:"Oswald",sans-serif;
-  font-size:20px;
-  font-weight:600;
-  margin-right:35px;
-  white-space:nowrap;
-}
-
-@keyframes marquee{
-  to{transform:translateX(-50%)}
-}
-
-/* GENERAL */
-
-section{
-  scroll-margin-top:100px;
-}
-
-.section{
-  max-width:1400px;
-  margin:auto;
-  padding:110px 6%;
-}
-
-.section-heading{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:30px;
-  margin-bottom:48px;
-}
-
-.eyebrow{
-  color:var(--orange);
-  font-size:12px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:2px;
-  margin-bottom:10px;
-}
-
-.section-heading h2{
-  font-family:"Oswald",sans-serif;
-  text-transform:uppercase;
-  font-size:clamp(45px,6vw,75px);
-  line-height:.95;
-}
-
-.section-heading p{
-  max-width:420px;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-/* MENU */
-
-.menu-section{
-  background:
-    radial-gradient(circle at 80% 10%,rgba(255,90,31,.05),transparent 25%),
-    var(--bg);
-}
-
-.category-nav{
-  display:flex;
-  gap:9px;
-  overflow-x:auto;
-  padding-bottom:12px;
-  margin-bottom:38px;
-  scrollbar-width:none;
-}
-
-.category-nav::-webkit-scrollbar{
-  display:none;
-}
-
-.category-btn{
-  flex:0 0 auto;
-  padding:11px 18px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:#bbb6af;
-  cursor:pointer;
-  transition:.25s;
-  font-weight:600;
-  font-size:13px;
-}
-
-.category-btn:hover,
-.category-btn.active{
-  background:var(--orange);
-  color:#fff;
-  border-color:var(--orange);
-}
-
-.menu-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:17px;
-}
-
-.menu-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:24px;
-  min-height:205px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  transition:.35s;
-  position:relative;
-  overflow:hidden;
-}
-
-.menu-card:hover{
-  transform:translateY(-7px);
-  border-color:rgba(255,90,31,.35);
-  background:var(--card-hover);
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
-.card-top{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  align-items:start;
-}
-
-.menu-card h3{
-  font-family:"Oswald",sans-serif;
-  font-size:25px;
-  text-transform:uppercase;
-  line-height:1;
-}
-
-.price{
-  color:var(--orange);
-  font-size:17px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.menu-card p{
-  color:var(--muted);
-  line-height:1.6;
-  font-size:14px;
-  margin-top:16px;
-}
-
-.card-bottom{
-  margin-top:22px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-
-.category-label{
-  color:#777;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-  font-weight:700;
-}
-
-.details-btn{
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.03);
-  color:#fff;
-  padding:9px 13px;
-  border-radius:999px;
-  cursor:pointer;
-  font-size:12px;
-  font-weight:700;
-  transition:.25s;
-}
-
-.details-btn:hover{
-  background:var(--orange);
-  border-color:var(--orange);
-  transform:translateY(-2px);
-}
-
-/* DELIVERY */
-
-.delivery-section{
-  background:var(--bg-soft);
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-}
-
-.delivery-layout{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:20px;
-}
-
-.delivery-main,
-.info-box{
-  border:1px solid var(--border);
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:38px;
-}
-
-.delivery-main h3{
-  font-family:"Oswald",sans-serif;
-  font-size:48px;
-  text-transform:uppercase;
-  line-height:1;
-}
-
-.delivery-main h3 span{
-  color:var(--orange);
-}
-
-.delivery-main p{
-  color:var(--muted);
-  line-height:1.7;
-  margin-top:20px;
-  max-width:600px;
-}
-
-.delivery-badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-top:28px;
-}
-
-.badge{
-  padding:10px 14px;
-  border-radius:999px;
-  background:#202020;
-  border:1px solid var(--border);
-  font-size:12px;
-  font-weight:600;
-}
-
-.info-box h4{
-  font-family:"Oswald",sans-serif;
-  font-size:27px;
-  text-transform:uppercase;
-  margin-bottom:20px;
-}
-
-.zone-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-}
-
-.zone-list span{
-  color:#aaa;
-  font-size:12px;
-  padding:7px 9px;
-  background:#1e1e1e;
-  border-radius:7px;
-}
-
-/* INFOS */
-
-.infos-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.info-card{
-  padding:30px;
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  background:var(--card);
-  transition:.3s;
-}
-
-.info-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(255,90,31,.3);
-}
-
-.info-icon{
-  width:43px;
-  height:43px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  background:rgba(255,90,31,.1);
-  color:var(--orange);
-  margin-bottom:22px;
-  font-size:20px;
-}
-
-.info-card h3{
-  font-family:"Oswald",sans-serif;
-  font-size:28px;
-  text-transform:uppercase;
-  margin-bottom:15px;
-}
-
-.info-card p,
-.info-card a{
-  color:var(--muted);
-  line-height:1.8;
-  font-size:14px;
-}
-
-.info-card a:hover{
-  color:var(--orange);
-}
-
-.hours-row{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  border-bottom:1px solid var(--border);
-  padding:8px 0;
-  font-size:13px;
-}
-
-.hours-row span:last-child{
-  color:#fff;
-  font-weight:600;
-}
-
-/* CTA */
-
-.final-cta{
-  max-width:1400px;
-  margin:auto;
-  padding:40px 6% 110px;
-}
-
-.cta-box{
-  position:relative;
-  overflow:hidden;
-  border-radius:30px;
-  background:var(--orange);
-  color:#111;
-  padding:70px;
-}
-
-.cta-box::after{
-  content:"LOS";
-  position:absolute;
-  right:-25px;
-  bottom:-80px;
-  font-family:"Oswald",sans-serif;
-  font-size:230px;
-  font-weight:700;
-  opacity:.09;
-}
-
-.cta-box h2{
-  font-family:"Oswald",sans-serif;
-  font-size:clamp(50px,7vw,90px);
-  text-transform:uppercase;
-  line-height:.9;
-}
-
-.cta-box p{
-  margin-top:18px;
-  max-width:500px;
-  line-height:1.6;
-}
-
-.cta-box .btn{
-  background:#111;
-  color:#fff;
-  margin-top:28px;
-}
-
-.cta-box .btn:hover{
-  background:#fff;
-  color:#111;
-}
-
-/* FOOTER */
-
-footer{
-  border-top:1px solid var(--border);
-  padding:35px 6%;
-}
-
-.footer-inner{
-  max-width:1400px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.footer-logo{
-  font-family:"Oswald",sans-serif;
-  font-size:25px;
-}
-
-.footer-logo span{
-  color:var(--orange);
-}
-
-footer p{
-  color:#666;
-  font-size:12px;
-}
-
-/* MODAL */
-
-.modal-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(10px);
-  z-index:2000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  opacity:0;
-  visibility:hidden;
-  transition:.3s;
-}
-
-.modal-overlay.active{
-  opacity:1;
-  visibility:visible;
-}
-
-.modal{
-  width:min(680px,100%);
-  max-height:90vh;
-  overflow-y:auto;
-  background:#171717;
-  border:1px solid var(--border);
-  border-radius:28px;
-  padding:30px;
-  transform:translateY(25px) scale(.97);
-  transition:.35s;
-  position:relative;
-}
-
-.modal-overlay.active .modal{
-  transform:translateY(0) scale(1);
-}
-
-.modal-close{
-  position:absolute;
-  top:18px;
-  right:18px;
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  border:1px solid var(--border);
-  background:#222;
-  color:#fff;
-  cursor:pointer;
-  font-size:18px;
-}
-
-.modal-close:hover{
-  background:var(--orange);
-}
-
-.modal-kicker{
-  color:var(--orange);
-  text-transform:uppercase;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  margin-bottom:8px;
-}
-
-.modal h2{
-  font-family:"Oswald",sans-serif;
-  font-size:44px;
-  text-transform:uppercase;
-  line-height:1;
-  padding-right:45px;
-}
-
-.modal-description{
-  color:var(--muted);
-  line-height:1.6;
-  margin-top:15px;
-}
-
-.base-tacos{
-  margin-top:22px;
-  padding:16px;
-  border:1px solid rgba(255,90,31,.25);
-  border-radius:16px;
-  background:rgba(255,90,31,.06);
-}
-
-.base-tacos strong{
-  color:var(--orange);
-}
-
-.detail-group{
-  margin-top:27px;
-}
-
-.detail-group h4{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-  margin-bottom:11px;
-}
-
-.option-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-
-.option{
-  padding:9px 12px;
-  border-radius:9px;
-  background:#222;
-  border:1px solid var(--border);
-  color:#ccc;
-  font-size:12px;
-}
-
-.option.extra{
-  border-color:rgba(255,90,31,.3);
-  color:#ff9a73;
-}
-
-/* REVEAL */
-
-.reveal{
-  opacity:0;
-  transform:translateY(30px);
-  transition:opacity .7s ease,transform .7s ease;
-}
-
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* RESPONSIVE */
-
-@media(max-width:1000px){
-  .menu-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .delivery-layout{
-    grid-template-columns:1fr;
-  }
-
-  .infos-grid{
-    grid-template-columns:1fr;
-  }
-
-  .hero-food{
-    right:3%;
-    opacity:.35;
-  }
-}
-
-@media(max-width:760px){
-
-  .navbar{
-    padding:16px 5%;
-  }
-
-  .nav-links{
-    position:absolute;
-    top:calc(100% + 8px);
-    left:5%;
-    right:5%;
-    display:flex;
-    flex-direction:column;
-    align-items:stretch;
-    gap:0;
-    background:rgba(20,20,20,.97);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:8px;
-    transform:translateY(-10px);
-    opacity:0;
-    pointer-events:none;
-    transition:.25s;
-    backdrop-filter:blur(20px);
-  }
-
-  .nav-links.open{
-    transform:translateY(0);
-    opacity:1;
-    pointer-events:auto;
-  }
-
-  .nav-links a{
-    padding:14px;
-    border-radius:12px;
-  }
-
-  .nav-links a:hover{
-    background:#242424;
-  }
-
-  .nav-contact{
-    border:0;
-  }
-
-  .menu-toggle{
-    display:block;
-  }
-
-  .hero{
-    min-height:90vh;
-    padding-top:130px;
-  }
-
-  .hero h1{
-    font-size:clamp(70px,22vw,120px);
-    letter-spacing:-3px;
-  }
-
-  .hero-food{
-    display:none;
-  }
-
-  .hero-actions{
-    flex-direction:column;
-    align-items:stretch;
-    max-width:280px;
-  }
-
-  .section{
-    padding:75px 5%;
-  }
-
-  .section-heading{
-    display:block;
-  }
-
-  .section-heading p{
-    margin-top:18px;
-  }
-
-  .menu-grid{
-    grid-template-columns:1fr;
-  }
-
-  .delivery-main,
-  .info-box{
-    padding:26px;
-  }
-
-  .delivery-main h3{
-    font-size:39px;
-  }
-
-  .cta-box{
-    padding:42px 27px;
-  }
-
-  .footer-inner{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:10px;
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,
-  *::before,
-  *::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17130f">
+  <meta name="description" content="Los Brothers à Cysoing : burgers, smash, tacos, kebabs, chicken et Tex-Mex. Découvrez la carte et les informations pratiques.">
+  <title>Los Brothers — Cysoing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #17130f;
+      --ink-soft: #211b16;
+      --panel: #28211b;
+      --cream: #f4efe7;
+      --muted: #b9afa2;
+      --orange: #f4773b;
+      --orange-light: #ff9b67;
+      --line: rgba(244, 239, 231, .13);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --display: "Oswald", Impact, sans-serif;
+      --wrap: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; background: var(--ink); color: var(--cream); font-family: var(--sans); line-height: 1.6; }
+    body, button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--orange-light); outline-offset: 4px; }
+    .wrap { width: min(var(--wrap), calc(100% - 48px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--line); background: rgba(23,19,15,.92); backdrop-filter: blur(16px); }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-family: var(--display); font-size: 21px; font-weight: 700; line-height: 1; letter-spacing: .04em; }
+    .brand-mark { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--orange); border-radius: 50%; color: var(--orange); font-size: 14px; }
+    .brand-name span { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: #d0c7bd; font-size: 13px; font-weight: 600; }
+    .nav-links a:hover { color: white; }
+    .nav-cta, .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 10px; padding: 0 20px; border: 1px solid transparent; border-radius: 999px; background: var(--orange); color: #1c130e; font-size: 13px; font-weight: 700; transition: transform .2s ease, background .2s ease; }
+    .nav-cta { min-height: 40px; padding-inline: 16px; }
+    .button:hover, .nav-cta:hover { transform: translateY(-2px); background: var(--orange-light); }
+    .button-quiet { border-color: var(--line); background: transparent; color: var(--cream); }
+    .button-quiet:hover { background: rgba(255,255,255,.08); }
+    .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; font-size: 20px; }
+    .hero { position: relative; overflow: hidden; min-height: 620px; display: grid; align-items: center; padding: 86px 0 102px; background: radial-gradient(ellipse at 82% 46%, rgba(244,119,59,.16), transparent 35%), linear-gradient(120deg, #17130f 45%, #211811); }
+    .hero::after { position: absolute; right: -110px; bottom: -280px; width: 650px; height: 650px; border: 1px solid rgba(244,119,59,.16); border-radius: 50%; box-shadow: 0 0 0 48px rgba(244,119,59,.025), 0 0 0 96px rgba(244,119,59,.02); content: ""; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; }
+    .eyebrow { margin: 0 0 17px; color: var(--orange-light); font-size: 11px; font-weight: 700; letter-spacing: .19em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 { max-width: 790px; margin-bottom: 22px; font-family: var(--display); font-size: clamp(68px, 10vw, 132px); font-weight: 600; line-height: .91; letter-spacing: -.035em; text-transform: uppercase; }
+    .hero h1 span { display: block; color: var(--orange); }
+    .hero-copy { max-width: 520px; margin-bottom: 28px; color: #d0c7bd; font-size: 16px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-note { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 48px; color: var(--muted); font-size: 12px; }
+    .hero-note span::before { margin-right: 9px; color: var(--orange); content: "✦"; }
+    .section { padding: 100px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 34px; }
+    .section-head h2 { margin-bottom: 0; font-family: var(--display); font-size: clamp(42px, 6vw, 68px); font-weight: 600; line-height: .98; text-transform: uppercase; }
+    .section-head p { max-width: 420px; margin-bottom: 2px; color: var(--muted); font-size: 14px; }
+    .menu-section { background: #1b1713; }
+    .menu-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 36px 0 22px; }
+    .category-list { display: flex; gap: 8px; overflow-x: auto; padding: 3px 2px 12px; scrollbar-width: thin; scrollbar-color: #514338 transparent; }
+    .category-button { flex: 0 0 auto; padding: 10px 15px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: #d1c8be; cursor: pointer; font-size: 12px; font-weight: 600; transition: .2s; }
+    .category-button:hover, .category-button[aria-pressed="true"] { border-color: var(--orange); background: var(--orange); color: #1c130e; }
+    .menu-count { flex: 0 0 auto; color: var(--muted); font-size: 12px; }
+    .menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .menu-card { display: flex; min-height: 176px; flex-direction: column; justify-content: space-between; padding: 21px; border: 1px solid var(--line); border-radius: 5px 22px 5px 22px; background: #211b16; transition: border-color .2s, transform .2s, background .2s; }
+    .menu-card:hover { transform: translateY(-3px); border-color: rgba(244,119,59,.5); background: #292119; }
+    .menu-card-top { display: flex; align-items: start; justify-content: space-between; gap: 14px; }
+    .menu-card h3 { margin: 0; font-family: var(--display); font-size: 23px; font-weight: 500; line-height: 1.1; text-transform: uppercase; }
+    .price { flex: 0 0 auto; color: var(--orange-light); font-size: 14px; font-weight: 700; }
+    .menu-card p { margin: 12px 0 18px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .menu-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .category-tag { color: #8f8377; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .details-button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-size: 11px; font-weight: 600; }
+    .details-button:hover { border-color: var(--orange); color: var(--orange-light); }
+    .empty-state { grid-column: 1/-1; padding: 45px; border: 1px dashed var(--line); color: var(--muted); text-align: center; }
+    .delivery-section { padding: 78px 0; background: var(--orange); color: #21150f; }
+    .delivery-inner { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
+    .delivery-section .eyebrow { color: #57311d; }
+    .delivery-section h2 { max-width: 480px; margin-bottom: 16px; font-family: var(--display); font-size: clamp(42px, 6vw, 66px); line-height: .97; text-transform: uppercase; }
+    .delivery-section p { max-width: 460px; margin: 0; color: #57311d; font-size: 14px; }
+    .delivery-aside { padding: 25px; border: 1px solid rgba(33,21,15,.24); border-radius: 4px 22px 4px 22px; }
+    .delivery-aside h3 { margin-bottom: 17px; font-family: var(--display); font-size: 21px; text-transform: uppercase; }
+    .zone-list { display: flex; flex-wrap: wrap; gap: 7px; }
+    .zone-list span { padding: 7px 10px; border: 1px solid rgba(33,21,15,.2); border-radius: 999px; color: #3c281c; font-size: 11px; }
+    .info-section { background: var(--cream); color: var(--ink); }
+    .info-section .eyebrow { color: #b84b20; }
+    .info-section .section-head p { color: #70675d; }
+    .info-grid { display: grid; grid-template-columns: 1.1fr .9fr 1fr; gap: 12px; }
+    .info-card { min-height: 245px; padding: 27px; border: 1px solid rgba(23,19,15,.14); border-radius: 5px 22px 5px 22px; background: #fffaf2; }
+    .info-number { display: block; margin-bottom: 29px; color: #b84b20; font-family: var(--display); font-size: 14px; }
+    .info-card h3 { margin-bottom: 11px; font-family: var(--display); font-size: 25px; text-transform: uppercase; }
+    .info-card p, .info-card a { color: #62594f; font-size: 13px; line-height: 1.8; }
+    .info-card a { color: #a7411b; font-weight: 700; }
+    .hours-row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid rgba(23,19,15,.1); color: #62594f; font-size: 12px; }
+    .hours-row strong { color: var(--ink); font-weight: 700; white-space: nowrap; }
+    .final-cta { padding: 78px 0; }
+    .cta-panel { display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 42px; border: 1px solid var(--line); border-radius: 5px 28px 5px 28px; background: linear-gradient(110deg, #262018, #1a1511); }
+    .cta-panel h2 { margin: 0 0 8px; font-family: var(--display); font-size: clamp(32px, 5vw, 50px); line-height: 1; text-transform: uppercase; }
+    .cta-panel p { margin: 0; color: var(--muted); font-size: 13px; }
+    .site-footer { padding: 25px 0 34px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+    .footer-inner p { margin: 0; }
+    dialog { width: min(620px, calc(100% - 28px)); max-height: min(82vh, 720px); padding: 0; border: 1px solid var(--line); border-radius: 8px 26px 8px 26px; background: #211b16; color: var(--cream); }
+    dialog::backdrop { background: rgba(8,6,4,.78); backdrop-filter: blur(5px); }
+    .dialog-inner { padding: 27px; }
+    .dialog-head { display: flex; align-items: start; justify-content: space-between; gap: 15px; }
+    .dialog-head h2 { margin: 0; font-family: var(--display); font-size: 36px; text-transform: uppercase; }
+    .dialog-close { width: 38px; height: 38px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; }
+    .dialog-copy { color: var(--muted); font-size: 13px; }
+    .detail-group { margin-top: 22px; }
+    .detail-group h3 { margin: 0 0 10px; color: var(--orange-light); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+    .option-list { display: flex; flex-wrap: wrap; gap: 7px; }
+    .option { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; color: #e1d8cd; font-size: 11px; }
+    .option.extra { border-color: rgba(244,119,59,.4); color: var(--orange-light); }
+    @media (max-width: 900px) {
+      .menu-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .info-grid { grid-template-columns: 1fr 1fr; }
+      .info-card:last-child { grid-column: 1/-1; min-height: auto; }
+    }
+    @media (max-width: 680px) {
+      .wrap { width: min(var(--wrap), calc(100% - 32px)); }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: inline-grid; place-items: center; }
+      .nav-cta { display: none; }
+      .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 16px 16px; border-bottom: 1px solid var(--line); background: #17130f; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 8px; }
+      .hero { min-height: 570px; padding: 74px 0 72px; }
+      .hero h1 { font-size: clamp(62px, 16vw, 94px); }
+      .hero-copy { font-size: 14px; }
+      .hero-note { margin-top: 36px; }
+      .section { padding: 72px 0; }
+      .section-head { display: block; margin-bottom: 25px; }
+      .section-head p { margin: 15px 0 0; }
+      .menu-toolbar { display: block; margin-top: 25px; }
+      .menu-count { display: block; margin-top: 3px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-card { min-height: 150px; }
+      .delivery-section { padding: 64px 0; }
+      .delivery-inner { grid-template-columns: 1fr; gap: 28px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .info-card, .info-card:last-child { grid-column: auto; min-height: auto; }
+      .info-card { padding: 23px; }
+      .info-number { margin-bottom: 16px; }
+      .cta-panel { display: block; padding: 28px; }
+      .cta-panel .button { margin-top: 22px; }
+      .footer-inner { align-items: start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
 </head>
-
 <body>
-
-<header class="navbar" id="navbar">
-  <div class="nav-inner">
-
-    <a href="#accueil" class="logo">
-      LOS <span>BROTHERS</span>
-    </a>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
-      ☰
-    </button>
-
-    <nav class="nav-links" id="navLinks">
-
-      <a href="#carte">La carte</a>
-      <a href="#livraison">Livraison</a>
-      <a href="#infos">Infos</a>
-      <a href="#contact">Contact</a>
-      <a href="#carte" class="nav-contact">Découvrir la carte</a>
-
-    </nav>
-
-  </div>
-</header>
-
-
-<main>
-
-<section class="hero" id="accueil">
-
-  <div class="hero-content">
-
-    <div class="hero-kicker">
-      Cysoing · Nord
-    </div>
-
-    <h1>
-      LOS<br>
-      <span>BROTHERS</span>
-    </h1>
-
-    <p class="hero-description">
-      Burgers, smash, tacos, kebab, chicken et Tex-Mex.
-      Une carte généreuse, préparée pour les grosses faims
-      et les petits plaisirs.
-    </p>
-
-    <div class="hero-actions">
-
-      <a href="#carte" class="btn btn-primary">
-        Découvrir la carte
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#accueil" aria-label="Los Brothers, accueil">
+        <span class="brand-mark" aria-hidden="true">LB</span>
+        <span class="brand-name">LOS <span>BROTHERS</span></span>
       </a>
-
-      <a href="#infos" class="btn btn-secondary">
-        Infos & horaires
-      </a>
-
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Navigation principale">
+        <a href="#carte">La carte</a>
+        <a href="#livraison">Livraison</a>
+        <a href="#infos">Infos pratiques</a>
+      </nav>
+      <a class="nav-cta" href="tel:0982768408">Appeler · 09 82 76 84 08</a>
     </div>
+  </header>
 
-  </div>
-
-  <div class="hero-food" aria-hidden="true">
-    <div class="burger-bun-top"></div>
-    <div class="burger-cheese"></div>
-    <div class="burger-patty"></div>
-    <div class="burger-bun-bottom"></div>
-  </div>
-
-</section>
-
-
-<div class="marquee">
-  <div class="marquee-track">
-
-    <span>BURGERS ✦</span>
-    <span>SMASH ✦</span>
-    <span>TACOS ✦</span>
-    <span>KEBAB ✦</span>
-    <span>CHICKEN ✦</span>
-    <span>TEX-MEX ✦</span>
-
-    <span>BURGERS ✦</span>
-    <span>SMASH ✦</span>
-    <span>TACOS ✦</span>
-    <span>KEBAB ✦</span>
-    <span>CHICKEN ✦</span>
-    <span>TEX-MEX ✦</span>
-
-  </div>
-</div>
-
-
-<section class="section menu-section" id="carte">
-
-  <div class="section-heading reveal">
-
-    <div>
-      <div class="eyebrow">La carte</div>
-      <h2>À manger.<br>À kiffer.</h2>
-    </div>
-
-    <p>
-      Découvrez les spécialités Los Brothers :
-      burgers, smash, tacos, kebab, chicken, Tex-Mex,
-      salades, desserts et boissons.
-    </p>
-
-  </div>
-
-
-  <div class="category-nav reveal">
-
-    <button class="category-btn active" data-category="all">Tout</button>
-    <button class="category-btn" data-category="burger">Burger</button>
-    <button class="category-btn" data-category="smash">Smash</button>
-    <button class="category-btn" data-category="kebab">Kebab</button>
-    <button class="category-btn" data-category="chicken">Chicken</button>
-    <button class="category-btn" data-category="texmex">Tex-Mex</button>
-    <button class="category-btn" data-category="tacos">Tacos</button>
-    <button class="category-btn" data-category="extra">Extras</button>
-    <button class="category-btn" data-category="salade">Salades</button>
-    <button class="category-btn" data-category="dessert">Desserts</button>
-    <button class="category-btn" data-category="boisson">Boissons</button>
-
-  </div>
-
-
-  <div class="menu-grid" id="menuGrid"></div>
-
-</section>
-
-
-<section class="delivery-section" id="livraison">
-
-  <div class="section delivery-layout">
-
-    <div class="delivery-main reveal">
-
-      <div class="eyebrow">Livraison</div>
-
-      <h3>
-        Livraison<br>
-        <span>offerte dès 20€.</span>
-      </h3>
-
-      <p>
-        Livraison à Cysoing et dans les alentours.
-        Vous pouvez également venir récupérer votre commande
-        directement sur place.
-      </p>
-
-      <div class="delivery-badges">
-        <span class="badge">🚗 Livraison</span>
-        <span class="badge">📍 Cysoing & alentours</span>
-        <span class="badge">🥡 À emporter</span>
-        <span class="badge">🍔 Sur place</span>
+  <main>
+    <section class="hero" id="accueil">
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Burgers · Smash · Tacos · Cysoing</p>
+        <h1>Los <span>Brothers</span></h1>
+        <p class="hero-copy">Burgers, smash, tacos, kebabs, chicken et Tex-Mex : retrouvez la carte de Los Brothers, à Cysoing.</p>
+        <div class="hero-actions">
+          <a class="button" href="#carte">Découvrir la carte <span aria-hidden="true">↘</span></a>
+          <a class="button button-quiet" href="tel:0982768408">Appeler le restaurant</a>
+        </div>
+        <div class="hero-note" aria-label="Informations rapides">
+          <span>Cysoing · Nord</span>
+          <span>Sur place · À emporter · Livraison</span>
+        </div>
       </div>
+    </section>
 
-    </div>
-
-
-    <div class="info-box reveal">
-
-      <h4>Zone de livraison</h4>
-
-      <div class="zone-list">
-        <span>Cysoing</span>
-        <span>Bouvines</span>
-        <span>Gruson</span>
-        <span>Camphin-en-Pévèle</span>
-        <span>Cappelle-en-Pévèle</span>
-        <span>Cobrieux</span>
-        <span>Louvil</span>
-        <span>Baisieux</span>
-        <span>Chéreng</span>
-        <span>Anstaing</span>
-        <span>Sainghin-en-Mélantois</span>
-        <span>Péronne-en-Mélantois</span>
-        <span>Bourghelles</span>
-        <span>Bachy</span>
-        <span>Fretin</span>
-        <span>Genech</span>
-        <span>Wannehain</span>
-        <span>Villeneuve-d'Ascq</span>
-        <span>Lesquin</span>
-        <span>Pont-à-Marcq</span>
+    <section class="section menu-section" id="carte">
+      <div class="wrap">
+        <div class="section-head">
+          <div><p class="eyebrow">À la carte</p><h2>Choisis ton<br>envie du moment.</h2></div>
+          <p>Parcours les catégories et ouvre les détails des tacos pour retrouver les viandes, sauces et options.</p>
+        </div>
+        <div class="menu-toolbar">
+          <div class="category-list" id="categoryList" role="group" aria-label="Filtrer la carte"></div>
+          <span class="menu-count" id="menuCount" aria-live="polite"></span>
+        </div>
+        <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
       </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="section" id="infos">
-
-  <div class="section-heading reveal">
-
-    <div>
-      <div class="eyebrow">Los Brothers</div>
-      <h2>Infos<br>pratiques.</h2>
-    </div>
-
-    <p>
-      Tout ce qu'il faut savoir avant de passer chez nous.
-    </p>
-
-  </div>
-
-
-  <div class="infos-grid">
-
-    <div class="info-card reveal">
-
-      <div class="info-icon">📍</div>
-
-      <h3>Adresse</h3>
-
-      <p>
-        273 Rue Jean-Baptiste Lebas<br>
-        59830 Cysoing
-      </p>
-
-      <a
-        href="https://www.google.com/maps/search/?api=1&query=273+Rue+Jean-Baptiste+Lebas+59830+Cysoing"
-        target="_blank"
-        rel="noopener"
-      >
-        Voir sur Google Maps →
-      </a>
-
-    </div>
-
-
-    <div class="info-card reveal">
-
-      <div class="info-icon">🕐</div>
-
-      <h3>Horaires</h3>
-
-      <div class="hours-row">
-        <span>Lun — Ven</span>
-        <span>18h30 — 22h30</span>
+    <section class="delivery-section" id="livraison">
+      <div class="wrap delivery-inner">
+        <div>
+          <p class="eyebrow">À votre porte</p>
+          <h2>La livraison est offerte dès 20€.</h2>
+          <p>Livraison à Cysoing et dans les alentours. Vous pouvez aussi venir récupérer votre commande directement sur place.</p>
+        </div>
+        <div class="delivery-aside">
+          <h3>Zone de livraison</h3>
+          <div class="zone-list">
+            <span>Cysoing</span><span>Bouvines</span><span>Gruson</span><span>Camphin-en-Pévèle</span>
+            <span>Cappelle-en-Pévèle</span><span>Cobrieux</span><span>Louvil</span><span>Baisieux</span>
+            <span>Chéreng</span><span>Anstaing</span><span>Sainghin-en-Mélantois</span><span>Péronne-en-Mélantois</span>
+            <span>Bourghelles</span><span>Bachy</span><span>Fretin</span><span>Genech</span>
+            <span>Wannehain</span><span>Villeneuve-d'Ascq</span><span>Lesquin</span><span>Pont-à-Marcq</span>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="hours-row">
-        <span>Samedi</span>
-        <span>11h30 — 23h00</span>
+    <section class="section info-section" id="infos">
+      <div class="wrap">
+        <div class="section-head">
+          <div><p class="eyebrow">Nous trouver</p><h2>Infos pratiques.</h2></div>
+          <p>Adresse, horaires et téléphone pour préparer votre passage ou appeler directement.</p>
+        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <span class="info-number">01 / ADRESSE</span>
+            <h3>À Cysoing</h3>
+            <p>273 Rue Jean-Baptiste Lebas<br>59830 Cysoing</p>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=273+Rue+Jean-Baptiste+Lebas+59830+Cysoing" target="_blank" rel="noopener noreferrer">Ouvrir dans Google Maps ↗</a>
+          </article>
+          <article class="info-card">
+            <span class="info-number">02 / HORAIRES</span>
+            <h3>Ouverture</h3>
+            <div class="hours-row"><span>Lundi — Vendredi</span><strong>18h30 — 22h30</strong></div>
+            <div class="hours-row"><span>Samedi</span><strong>11h30 — 23h00</strong></div>
+            <div class="hours-row"><span>Dimanche</span><strong>11h30 — 23h00</strong></div>
+          </article>
+          <article class="info-card">
+            <span class="info-number">03 / CONTACT</span>
+            <h3>On vous répond</h3>
+            <p>Une question sur la carte ou la livraison ? Appelez directement Los Brothers.</p>
+            <a href="tel:0982768408">09 82 76 84 08 ↗</a>
+          </article>
+        </div>
       </div>
+    </section>
 
-      <div class="hours-row">
-        <span>Dimanche</span>
-        <span>11h30 — 23h00</span>
+    <section class="final-cta">
+      <div class="wrap cta-panel">
+        <div><p class="eyebrow">Los Brothers · Cysoing</p><h2>On se retrouve à table ?</h2><p>Appelez-nous ou passez découvrir la carte.</p></div>
+        <a class="button" href="tel:0982768408">09 82 76 84 08 <span aria-hidden="true">↗</span></a>
       </div>
+    </section>
+  </main>
 
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#accueil"><span class="brand-mark" aria-hidden="true">LB</span><span class="brand-name">LOS <span>BROTHERS</span></span></a>
+      <p>© <span id="year"></span> Los Brothers · Cysoing</p>
     </div>
+  </footer>
 
-
-    <div class="info-card" id="contact">
-
-      <div class="info-icon">☎</div>
-
-      <h3>Contact</h3>
-
-      <p>
-        Une question ?<br>
-        Appelez directement Los Brothers.
-      </p>
-
-      <a href="tel:0982768408">
-        09 82 76 84 08 →
-      </a>
-
+  <dialog id="tacosDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-inner">
+      <div class="dialog-head"><h2 id="dialogTitle">Détails du tacos</h2><button class="dialog-close" id="dialogClose" type="button" aria-label="Fermer">×</button></div>
+      <p class="dialog-copy" id="dialogCopy"></p>
+      <div id="dialogOptions"></div>
     </div>
+  </dialog>
 
-  </div>
-
-</section>
-
-
-<div class="final-cta reveal">
-
-  <div class="cta-box">
-
-    <h2>
-      FAIS-TOI<br>
-      PLAISIR.
-    </h2>
-
-    <p>
-      Retrouve-nous à Cysoing pour découvrir la carte Los Brothers.
-    </p>
-
-    <a
-      href="https://www.google.com/maps/search/?api=1&query=273+Rue+Jean-Baptiste+Lebas+59830+Cysoing"
-      target="_blank"
-      rel="noopener"
-      class="btn"
-    >
-      Nous trouver →
-    </a>
-
-  </div>
-
-</div>
-
-</main>
-
-
-<footer>
-
-  <div class="footer-inner">
-
-    <div class="footer-logo">
-      LOS <span>BROTHERS</span>
-    </div>
-
-    <p>
-      © 2026 Los Brothers · Cysoing
-    </p>
-
-  </div>
-
-</footer>
-
-
-<!-- MODAL TACOS -->
-
-<div class="modal-overlay" id="modalOverlay">
-
-  <div class="modal">
-
-    <button class="modal-close" id="modalClose">×</button>
-
-    <div class="modal-kicker">French Tacos</div>
-
-    <h2 id="modalTitle"></h2>
-
-    <p class="modal-description" id="modalDescription"></p>
-
-    <div class="base-tacos">
-      <strong>Inclus de base :</strong>
-      frites + sauce fromagère
-    </div>
-
-    <div id="modalOptions"></div>
-
-  </div>
-
-</div>
-
-
-<script>
-
-/* =====================================
-   MENU
-===================================== */
-
-const menu = [
+  <script>
+    const menu = [
 
 /* BURGERS */
 
@@ -1852,12 +708,7 @@ description:"Chocolat chaud."
 
 ];
 
-
-/* =====================================
-   TACOS
-===================================== */
-
-const tacosDetails={
+    const tacosDetails={
 
 meats:[
 "Steack",
@@ -1909,12 +760,7 @@ gratinages:[
 
 };
 
-
-/* =====================================
-   LABELS
-===================================== */
-
-const categoryLabels={
+    const categoryLabels={
 burger:"Burger",
 smash:"Smash",
 kebab:"Kebab",
@@ -1927,354 +773,122 @@ dessert:"Dessert",
 boisson:"Boisson"
 };
 
+    const categoryNames = { all: "Toute la carte", ...categoryLabels };
+    const menuGrid = document.getElementById("menuGrid");
+    const categoryList = document.getElementById("categoryList");
+    const menuCount = document.getElementById("menuCount");
+    const menuCategories = [...new Set(menu.map((item) => item.category))];
+    let selectedCategory = "all";
 
-/* =====================================
-   RENDER
-===================================== */
+    function renderCategories() {
+      const categories = ["all", ...menuCategories];
+      categoryList.replaceChildren();
+      categories.forEach((category) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "category-button";
+        button.textContent = categoryNames[category] || category;
+        button.setAttribute("aria-pressed", String(category === selectedCategory));
+        button.addEventListener("click", () => {
+          selectedCategory = category;
+          renderCategories();
+          renderMenu();
+        });
+        categoryList.append(button);
+      });
+    }
 
-const menuGrid=document.getElementById("menuGrid");
+    function addTextElement(parent, tag, className, text) {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      element.textContent = text;
+      parent.append(element);
+      return element;
+    }
 
-function renderMenu(category="all"){
+    function renderMenu() {
+      const items = selectedCategory === "all"
+        ? menu
+        : menu.filter((item) => item.category === selectedCategory);
+      menuGrid.replaceChildren();
+      menuCount.textContent = items.length + (items.length > 1 ? " produits" : " produit");
 
-  const filtered=
-    category==="all"
-      ? menu
-      : menu.filter(item=>item.category===category);
-
-  menuGrid.innerHTML="";
-
-  filtered.forEach((item,index)=>{
-
-    const card=document.createElement("article");
-
-    card.className="menu-card";
-
-    card.innerHTML=`
-
-      <div>
-
-        <div class="card-top">
-
-          <h3>${item.name}</h3>
-
-          <span class="price">
-            ${item.price}
-          </span>
-
-        </div>
-
-        <p>
-          ${item.description}
-        </p>
-
-      </div>
-
-      <div class="card-bottom">
-
-        <span class="category-label">
-          ${categoryLabels[item.category]}
-        </span>
-
-        ${
-          item.details
-          ?
-          `<button class="details-btn" data-tacos="${item.size}">
-            Voir les détails →
-          </button>`
-          :
-          ""
+      items.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = "menu-card";
+        const top = document.createElement("div");
+        top.className = "menu-card-top";
+        addTextElement(top, "h3", "", item.name);
+        addTextElement(top, "span", "price", item.price);
+        card.append(top);
+        addTextElement(card, "p", "", item.description);
+        const bottom = document.createElement("div");
+        bottom.className = "menu-card-bottom";
+        addTextElement(bottom, "span", "category-tag", categoryNames[item.category] || item.category);
+        if (item.details) {
+          const details = addTextElement(bottom, "button", "details-button", "Détails du tacos ↗");
+          details.type = "button";
+          details.addEventListener("click", () => openTacosDialog(item.size));
         }
+        card.append(bottom);
+        menuGrid.append(card);
+      });
+    }
 
-      </div>
-    `;
+    function addOptionGroup(parent, title, options, extra = false) {
+      const group = document.createElement("section");
+      group.className = "detail-group";
+      addTextElement(group, "h3", "", title);
+      const list = document.createElement("div");
+      list.className = "option-list";
+      options.forEach((option) => addTextElement(list, "span", "option" + (extra ? " extra" : ""), option));
+      group.append(list);
+      parent.append(group);
+    }
 
-    menuGrid.appendChild(card);
+    const tacosDialog = document.getElementById("tacosDialog");
+    function openTacosDialog(size) {
+      document.getElementById("dialogTitle").textContent = "French Tacos " + size;
+      document.getElementById("dialogCopy").textContent = size === "M"
+        ? "Tacos M : 1 viande maximum et 1 sauce maximum. Frites et sauce fromagère incluses."
+        : size === "L"
+          ? "Tacos L : 2 viandes maximum et 2 sauces maximum. Frites et sauce fromagère incluses."
+          : "Tacos XL : 3 viandes maximum et 2 sauces maximum. Frites et sauce fromagère incluses.";
+      const options = document.getElementById("dialogOptions");
+      options.replaceChildren();
+      addOptionGroup(options, "Viandes", tacosDetails.meats);
+      addOptionGroup(options, "Sauces", tacosDetails.sauces);
+      addOptionGroup(options, "Garnitures · +1,90€", tacosDetails.garnitures, true);
+      addOptionGroup(options, "Gratinages · +1,90€", tacosDetails.gratinages, true);
+      tacosDialog.showModal();
+    }
 
-    setTimeout(()=>{
-      card.classList.add("visible");
-    },index*30);
-
-  });
-
-  document.querySelectorAll("[data-tacos]").forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-      openTacosModal(button.dataset.tacos);
-
+    document.getElementById("dialogClose").addEventListener("click", () => tacosDialog.close());
+    tacosDialog.addEventListener("click", (event) => {
+      if (event.target === tacosDialog) tacosDialog.close();
     });
 
-  });
-
-}
-
-
-/* INITIAL */
-
-renderMenu();
-
-
-/* =====================================
-   FILTERS
-===================================== */
-
-document.querySelectorAll(".category-btn").forEach(button=>{
-
-  button.addEventListener("click",()=>{
-
-    document
-      .querySelectorAll(".category-btn")
-      .forEach(btn=>btn.classList.remove("active"));
-
-    button.classList.add("active");
-
-    renderMenu(button.dataset.category);
-
-    scrollToSection("carte");
-
-  });
-
-});
-
-
-/* =====================================
-   NAVIGATION ROBUSTE
-===================================== */
-
-function scrollToSection(id){
-
-  const element=document.getElementById(id);
-
-  if(!element)return;
-
-  const offset=82;
-
-  const position=
-    element.getBoundingClientRect().top
-    +window.scrollY
-    -offset;
-
-  window.scrollTo({
-    top:position,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* Tous les liens internes passent par
-   la même fonction pour éviter les bugs
-   d'ancre sur mobile. */
-
-document.querySelectorAll('a[href^="#"]').forEach(link=>{
-
-  link.addEventListener("click",event=>{
-
-    const target=link.getAttribute("href");
-
-    if(target==="#")return;
-
-    const id=target.substring(1);
-
-    if(!document.getElementById(id))return;
-
-    event.preventDefault();
-
-    scrollToSection(id);
-
-    navLinks.classList.remove("open");
-
-    menuToggle.textContent="☰";
-
-  });
-
-});
-
-
-/* =====================================
-   TACOS MODAL
-===================================== */
-
-const modalOverlay=document.getElementById("modalOverlay");
-const modalClose=document.getElementById("modalClose");
-const modalTitle=document.getElementById("modalTitle");
-const modalDescription=document.getElementById("modalDescription");
-const modalOptions=document.getElementById("modalOptions");
-
-function createOptionGroup(title,options,extra=false){
-
-  return `
-
-    <div class="detail-group">
-
-      <h4>${title}</h4>
-
-      <div class="option-list">
-
-        ${options.map(option=>`
-
-          <span class="option ${extra?"extra":""}">
-            ${option}
-          </span>
-
-        `).join("")}
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-function openTacosModal(size){
-
-  modalTitle.textContent=`French Tacos ${size}`;
-
-  modalDescription.textContent=
-
-    size==="M"
-      ? "Tacos M : 1 viande maximum et 1 sauce maximum."
-      : size==="L"
-      ? "Tacos L : 2 viandes maximum et 2 sauces maximum."
-      : "Tacos XL : 3 viandes maximum et 2 sauces maximum.";
-
-  modalOptions.innerHTML=
-
-    createOptionGroup(
-      "Viandes",
-      tacosDetails.meats
-    )
-
-    +
-
-    createOptionGroup(
-      "Sauces",
-      tacosDetails.sauces
-    )
-
-    +
-
-    createOptionGroup(
-      "Garnitures · +1,90€",
-      tacosDetails.garnitures,
-      true
-    )
-
-    +
-
-    createOptionGroup(
-      "Gratinages · +1,90€",
-      tacosDetails.gratinages,
-      true
-    );
-
-  modalOverlay.classList.add("active");
-
-  document.body.classList.add("modal-open");
-
-}
-
-
-function closeModal(){
-
-  modalOverlay.classList.remove("active");
-
-  document.body.classList.remove("modal-open");
-
-}
-
-
-modalClose.addEventListener("click",closeModal);
-
-
-modalOverlay.addEventListener("click",event=>{
-
-  if(event.target===modalOverlay){
-    closeModal();
-  }
-
-});
-
-
-document.addEventListener("keydown",event=>{
-
-  if(event.key==="Escape"){
-    closeModal();
-  }
-
-});
-
-
-/* =====================================
-   MOBILE MENU
-===================================== */
-
-const menuToggle=document.getElementById("menuToggle");
-const navLinks=document.getElementById("navLinks");
-
-menuToggle.addEventListener("click",()=>{
-
-  navLinks.classList.toggle("open");
-
-  menuToggle.textContent=
-    navLinks.classList.contains("open")
-      ? "×"
-      : "☰";
-
-});
-
-
-/* =====================================
-   NAVBAR
-===================================== */
-
-const navbar=document.getElementById("navbar");
-
-window.addEventListener("scroll",()=>{
-
-  if(window.scrollY>40){
-    navbar.classList.add("scrolled");
-  }else{
-    navbar.classList.remove("scrolled");
-  }
-
-});
-
-
-/* =====================================
-   REVEAL
-===================================== */
-
-const observer=new IntersectionObserver(
-  entries=>{
-
-    entries.forEach(entry=>{
-
-      if(entry.isIntersecting){
-
-        entry.target.classList.add("visible");
-
-        observer.unobserve(entry.target);
-
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const open = menuToggle.getAttribute("aria-expanded") !== "true";
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+      menuToggle.textContent = open ? "×" : "☰";
+      navLinks.classList.toggle("open", open);
+    });
+    navLinks.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Ouvrir le menu");
+        menuToggle.textContent = "☰";
+        navLinks.classList.remove("open");
       }
-
     });
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  },
-  {
-    threshold:.12
-  }
-);
-
-
-document.querySelectorAll(".reveal").forEach(element=>{
-  observer.observe(element);
-});
-
-</script>
-
+    renderCategories();
+    renderMenu();
+  </script>
 </body>
 </html>
-```
