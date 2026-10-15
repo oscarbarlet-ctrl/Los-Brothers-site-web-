@@ -54,6 +54,9 @@
     h1, h2, h3, p { margin-top: 0; }
     .hero h1 { max-width: 790px; margin-bottom: 22px; font-family: var(--display); font-size: clamp(68px, 10vw, 132px); font-weight: 600; line-height: .91; letter-spacing: -.035em; text-transform: uppercase; }
     .hero h1 span { display: block; color: var(--orange); }
+    .opening-status { display: inline-flex; align-items: center; gap: 9px; width: fit-content; margin: 0 0 20px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); color: var(--cream); font-size: 12px; font-weight: 700; }
+    .status-dot { width: 9px; height: 9px; flex: 0 0 auto; border-radius: 50%; background: #f05252; box-shadow: 0 0 0 3px rgba(240,82,82,.14); }
+    .opening-status.is-open .status-dot { background: #45d483; box-shadow: 0 0 0 3px rgba(69,212,131,.15); }
     .hero-copy { max-width: 520px; margin-bottom: 28px; color: #d0c7bd; font-size: 16px; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
     .hero-note { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 48px; color: var(--muted); font-size: 12px; }
@@ -180,6 +183,10 @@
       <div class="wrap hero-inner">
         <p class="eyebrow">Burgers · Smash · Tacos · Cysoing</p>
         <h1>Los <span>Brothers</span></h1>
+        <div class="opening-status is-closed" id="openingStatus" role="status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-label">Fermé</span>
+        </div>
         <p class="hero-copy">Burgers, smash, tacos, kebabs, chicken et Tex-Mex : retrouvez la carte de Los Brothers, à Cysoing.</p>
         <div class="hero-actions">
           <a class="button" href="#carte">Découvrir la carte <svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 7 17 17M8 17h9V8"/></svg></a>
@@ -899,6 +906,35 @@ boisson:"Boisson"
       }
     });
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    function updateOpeningStatus() {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Europe/Paris",
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23"
+      }).formatToParts(new Date()).reduce((values, part) => {
+        values[part.type] = part.value;
+        return values;
+      }, {});
+      const day = parts.weekday;
+      const minuteOfDay = Number(parts.hour) * 60 + Number(parts.minute);
+      const weekend = day === "Sat" || day === "Sun";
+      const opensAt = weekend ? 11 * 60 + 30 : 18 * 60 + 30;
+      const closesAt = weekend ? 23 * 60 : 22 * 60 + 30;
+      const isOpen = minuteOfDay >= opensAt && minuteOfDay < closesAt;
+      const status = document.getElementById("openingStatus");
+      status.classList.toggle("is-open", isOpen);
+      status.classList.toggle("is-closed", !isOpen);
+      status.querySelector(".status-label").textContent = isOpen ? "Ouvert" : "Fermé";
+    }
+
+    updateOpeningStatus();
+    window.setInterval(updateOpeningStatus, 30000);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) updateOpeningStatus();
+    });
 
     renderCategories();
     renderMenu();
